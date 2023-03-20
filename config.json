@@ -1,0 +1,4 @@
+{
+  "session_token": "<token>",
+  "proxy":"https://127.0.0.1:7890"
+}
