@@ -1,26 +1,37 @@
+import json
+
 from revChatGPT.V3 import Chatbot
 
 
-MYAPIKEY = ""
-MYPROXY = ""
+class MyChat:
+    def __init__(self):
+        self.chatbot = None
+        self.config = None
 
+        self.load_config()
+        self.init_chatbot()
 
-chatbot = Chatbot(api_key=MYAPIKEY, proxy=MYPROXY)
+    def load_config(self):
+        fd = open("./config.json")
+        data = json.loads(fd.read())
+        self.config = data
 
+    def init_chatbot(self):
+        self.chatbot = Chatbot(api_key=self.config.get("apikey"), proxy=self.config.get("proxy"))
 
-def start_chat():
-    print('Welcome to ChatGPT CLI')
-    while True:
-        prompt = input('> ')
+    def run(self):
+        print('Welcome to ChatGPT CLI')
+        while True:
+            # 聊天样式
+            prompt = input('> ')
 
-        response = ""
-
-        response = chatbot.ask(
-            prompt
-        )
-
-        print(response)
+            response = ""
+            response = self.chatbot.ask(
+                prompt
+            )
+            print(response)
 
 
 if __name__ == '__main__':
-    start_chat()
+    chat = MyChat()
+    chat.run()
