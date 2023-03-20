@@ -1,4 +1,4 @@
 .idea
 
 venv
-config.json
+/config.json

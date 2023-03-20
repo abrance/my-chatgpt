@@ -19,17 +19,43 @@ class MyChat:
     def init_chatbot(self):
         self.chatbot = Chatbot(api_key=self.config.get("apikey"), proxy=self.config.get("proxy"))
 
+    def chat_loop(self):
+        while True:
+            # 聊天样式
+            try:
+                prompt = input('> ')
+            except UnicodeDecodeError as e:
+                print("error: {}, 重新输入".format(e))
+                continue
+            # 如果输入字符低于 2 个字,认为是输入错误
+            if len(prompt.strip()) < 2:
+                print("输入字符必须超过 2 个")
+                continue
+
+            response = None
+            response = self.chatbot.ask_stream(
+                prompt
+            )
+            for r in response:
+                print(r, end="")
+            print("")
+
     def run(self):
         print('Welcome to ChatGPT CLI')
         while True:
-            # 聊天样式
-            prompt = input('> ')
+            try:
+                self.chat_loop()
+            except KeyboardInterrupt as e:
+                print("C-c 断开连接")
 
-            response = ""
-            response = self.chatbot.ask(
-                prompt
-            )
-            print(response)
+            r = input("$ 输入 run 或者 exit\n")
+            if r.strip().upper() == "RUN":
+                continue
+            elif r.strip().upper() == "EXIT":
+                print("chat 结束")
+                break
+            else:
+                continue
 
 
 if __name__ == '__main__':
