@@ -1,6 +1,6 @@
 import json
 
-from revChatGPT.V3 import Chatbot
+from src.revChatGPT.V3 import Chatbot
 
 
 class MyChat:
