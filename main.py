@@ -28,6 +28,11 @@ class MyChat:
                 print("error: {}, 重新输入".format(e))
                 continue
             # 如果输入字符低于 2 个字,认为是输入错误
+            # 因为 chatgpt 经常不说完, 所以补全
+            if prompt in ("g", "go", "go ", "go o", "go on"):
+                print("asking continue ...")
+                prompt = "continue"
+
             if len(prompt.strip()) < 2:
                 print("输入字符必须超过 2 个")
                 continue
