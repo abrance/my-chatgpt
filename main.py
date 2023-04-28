@@ -1,20 +1,13 @@
-import json
-
 from src.revChatGPT.V3 import Chatbot
+from util import load_config
 
 
 class MyChat:
     def __init__(self):
         self.chatbot = None
-        self.config = None
+        self.config = load_config()
 
-        self.load_config()
         self.init_chatbot()
-
-    def load_config(self):
-        fd = open("./config.json")
-        data = json.loads(fd.read())
-        self.config = data
 
     def init_chatbot(self):
         self.chatbot = Chatbot(api_key=self.config.get("apikey"), proxy=self.config.get("proxy"))
