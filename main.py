@@ -12,6 +12,18 @@ class MyChat:
     def init_chatbot(self):
         self.chatbot = Chatbot(api_key=self.config.get("apikey"), proxy=self.config.get("proxy"))
 
+    def ask_continue(self) -> str:
+        response = None
+        response = self.chatbot.ask_stream(
+            "continue"
+        )
+        answer = ""
+        for r in response:
+            print(r, end="")
+            answer += r
+
+        return answer
+
     def chat_loop(self):
         while True:
             # 聊天样式
@@ -34,8 +46,18 @@ class MyChat:
             response = self.chatbot.ask_stream(
                 prompt
             )
+
+            answer = ""
             for r in response:
                 print(r, end="")
+                answer += r
+
+            while True:
+                if answer[-1] not in ["!", "?", ".", "。", "？", "！"]:
+                    answer = self.ask_continue()
+                else:
+                    break
+
             print("")
 
     def run(self):
