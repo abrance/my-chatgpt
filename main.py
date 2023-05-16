@@ -106,8 +106,8 @@ class MyChat:
         self.chatbot.save(self.history_filename)
 
     def select_session(self):
-        r = input("$ 输入 session 编号或 session name \n")
-        if r.strip().upper() == "exit":
+        r = input("$ 输入 session 编号或 session name 或者 exit\n")
+        if r.strip().upper() == "EXIT":
             return None
         elif len(r) > 10:
             print("session name 不允许超过 10 个")
