@@ -78,7 +78,7 @@ class MyChat:
 
     def run(self, conv="default"):
         print('Welcome to ChatGPT CLI')
-        print("run : conv: ", conv)
+        print("conv: ", conv)
         while True:
             try:
                 self.chat_loop(conv=conv)
@@ -87,11 +87,16 @@ class MyChat:
             except BaseException as be:
                 print(be)
 
-            r = input("$ 输入 run 或者 exit\n")
+            r = input("$ 输入 run 或者 exit 或者 reset\n")
             if r.strip().upper() == "RUN":
                 continue
             elif r.strip().upper() == "EXIT":
                 print("chat 结束")
+                break
+            elif r.strip().upper() == "RESET":
+                # self.chatbot.reset(convo_id=conv)
+                del self.chatbot.conversation[conv]
+                print("reset")
                 break
             else:
                 continue
